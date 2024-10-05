@@ -4,7 +4,7 @@ import src.cli
 
 def main():
     # CLIモードのみ実装済
-    src.cli.parse()
+    src.cli.main()
 
 
 if __name__ == "__main__":

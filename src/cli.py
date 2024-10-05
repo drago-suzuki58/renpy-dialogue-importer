@@ -4,6 +4,7 @@ import sys
 from dotenv import load_dotenv
 
 import src.input
+import src.export
 
 def parse():
     # コマンドライン引数のパーサーを設定
@@ -11,6 +12,8 @@ def parse():
     parser.add_argument("file1", help="Original dialogue file(.tab file)")
     parser.add_argument("file2", help="Translated dialogue file(.tab file)")
     parser.add_argument("-o", "--output", default="output", help="Output dir name (Default: output.csv)")
+    parser.add_argument("-la", "--language", default="japanese", help="Output language (Default: japanese)")
+    parser.add_argument("-s", "--strings", default=True, help="Output strings statement (Default: True)")
     parser.add_argument("-l", "--log", default="INFO", help="Logging Level (Default: INFO)")
 
 
@@ -38,7 +41,9 @@ def main():
     args = parse()
     
     dialogue = src.input.DialogueTab()
-    dialogue.load(args.file1, args.file2)
+    dialogue.load(args.file1, args.file2, args.language)
+    
+    exporter = src.export.exporter(dialogue, args)
 
 
 if __name__ == "__main__":
