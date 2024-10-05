@@ -1,14 +1,15 @@
 from loguru import logger
 import csv
+from dataclasses import dataclass
 
+@dataclass
 class DialogueLine:
-    def __init__(self, id, character, dialogue, filename, line_number, script):
-        self.id = id
-        self.character = character
-        self.dialogue = dialogue
-        self.filename = filename
-        self.line_number = line_number
-        self.script = script
+    id: str
+    character: str
+    dialogue: str
+    filename: str
+    line_number: int
+    script: str
 
 class DialogueTab:
     def __init__(self):
@@ -32,7 +33,7 @@ class DialogueTab:
                 # ファイルの形式が正しくなく、最後のtabが抜けているときには空文字を最後に追加
                 if len(row) <= 6:
                     row.append("")
-                self.original_dialogues[row[0]] = DialogueLine(row[0], row[1], row[2], row[3], row[4], row[5])
+                self.original_dialogues[row[0]] = DialogueLine(row[0], row[1], row[2], row[3], int(row[4]), row[5])
     
     def load_translated(self, filename):
         with open(filename, "r", encoding="utf-8") as f:
@@ -47,4 +48,4 @@ class DialogueTab:
                 # ファイルの形式が正しくなく、最後のtabが抜けているときには空文字を最後に追加
                 if len(row) <= 6:
                     row.append("")
-                self.translated_dialogues[row[0]] = DialogueLine(row[0], row[1], row[2], row[3], row[4], row[5])
+                self.translated_dialogues[row[0]] = DialogueLine(row[0], row[1], row[2], row[3], int(row[4]), row[5])
